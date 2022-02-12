@@ -69,7 +69,7 @@ def decider(message):
             stores_list.append(f"{store.id}\n{store.store_name}\n{store.store_address}\n{store.store_state}\n{store.store_pincode}")
         
         stores_markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-        stores_markup.add(*[f"{store.id}: {store.store_name}" for store in stores_obj], row_width=2)    
+        stores_markup.add(*[f"{store.id}:" for store in stores_obj], row_width=2)    
 
         msg = bot.reply_to(message, text=f"Hi! Kindly select the store id of one of the stores:\n" + "\n\n".join(stores_list), reply_markup=stores_markup)
 
@@ -115,17 +115,22 @@ def your_tickets(message):
         tickets_list = []
 
         try:
-            tickets_obj = Ticket.objects.get(user_id = message.from_user.id)
-        except Ticket.DoesNotExist:
-            tickets_obj = []
-
-        if len(tickets_obj) != 0:
+            tickets_obj = Ticket.objects.filter(user_id = message.from_user.id)
             for ticket in tickets_obj:
-                tickets_obj.append(f"{ticket.ticket_nos}\n{ticket.user_name}\n{ticket.issue}\n{ticket.ticket_status}")
+                tickets_list.append(f"{ticket.ticket_nos}\n{ticket.user_name}\n{ticket.issue}\n{ticket.ticket_status}")
 
             msg = bot.reply_to(message, text=f"Hi! These are the list of all your tickets:\n" + "\n\n".join(tickets_list))
-        if len(tickets_obj) == 0:
+        
+        except Ticket.DoesNotExist:
             msg = bot.reply_to(message, text=f"Hi! There aren't any tickets available for your account!\n")
+
+        # if tickets_obj.exists():
+        #     for ticket in tickets_obj:
+        #         tickets_obj.append(f"{ticket.ticket_nos}\n{ticket.user_name}\n{ticket.issue}\n{ticket.ticket_status}")
+
+        #     msg = bot.reply_to(message, text=f"Hi! These are the list of all your tickets:\n" + "\n\n".join(tickets_list))
+        # else:
+        #     msg = bot.reply_to(message, text=f"Hi! There aren't any tickets available for your account!\n")
         
     if message.text == "New Tickets":
         chat_id = message.chat.id
@@ -161,6 +166,8 @@ def get_enquiry_for_store(message):
     user_name = message.from_user.username
     form_class = Form_class(user_name)
     form_class.user_id = user_id
+    print(message.text)
+    print(type(message.text))
     form_class.store = Store.objects.get(id=int(message.text))
     form_dict[chat_id] = form_class
 
