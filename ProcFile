@@ -1,2 +1,1 @@
-web: gunicorn anurag_telegram_refund.wsgi
-web: python3 newbot.py
+worker: python newbot.py
