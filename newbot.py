@@ -49,7 +49,7 @@ class Vouch_class:
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
     kb_markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    kb_markup.add("Stores", "Forms").add("Giveaways", "Tickets").add("Vouches")
+    kb_markup.add("Stores", "Forms").add("Vouches", "Tickets")
     msg = bot.reply_to(message, """\
 Hi there, I am ypur Refund bot.
 Please select one of the following options:
