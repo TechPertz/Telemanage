@@ -258,4 +258,10 @@ def save_form(message):
 # WARNING It will work only if enable_save_next_step_handlers was called!
 # bot.load_next_step_handlers()
 
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.message:
+        if call.data == "Cancel":
+            bot.clear_step_handler_by_chat_id(chat_id=call.message.chat.id, message_id=call.message.message_id, text='Cancelled.')
+
 bot.infinity_polling()
