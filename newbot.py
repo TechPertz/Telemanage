@@ -56,6 +56,10 @@ Please select one of the following options:
 """, reply_markup=kb_markup)
     bot.register_next_step_handler(msg, decider)
 
+@bot.message_handler(commands=['cancel'])
+def cancel(message):
+        bot.next_step_backend.clear_handlers(message)
+
 def decider(message):
     print(message.text)
     print(type(message.text))
