@@ -69,7 +69,7 @@ def decider(message):
             stores_list.append(f"{store.id}\n{store.store_name}\n{store.store_address}\n{store.store_state}\n{store.store_pincode}")
         
         stores_markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-        stores_markup.add(*[f"{store.id}:" for store in stores_obj], row_width=2)    
+        stores_markup.add(*[str(store.id) for store in stores_obj], row_width=2)    
 
         msg = bot.reply_to(message, text=f"Hi! Kindly select the store id of one of the stores:\n" + "\n\n".join(stores_list), reply_markup=stores_markup)
 
