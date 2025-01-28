@@ -1,5 +1,3 @@
-Here’s a detailed and professional GitHub README based on the provided information:
-
 # TeleManage: Automated Customer Transactions and Data Handling Bot
 
 ## Overview
